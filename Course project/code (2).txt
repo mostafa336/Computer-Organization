@@ -1,0 +1,37 @@
+package gqwerg;
+public class met {
+    public static final int BLOCKSIZE =64;
+	public static void do_block(int n, int si, int sj, int sk, double [][]A, double [][]B, double [][]C){
+	    for(int i = si; i< si+BLOCKSIZE; i++){
+	        for(int j= sj; j< sj+BLOCKSIZE; j++){
+	            double cij = C[i][j];
+	            for(int k = sk; k< sk+BLOCKSIZE; k++){
+	                cij += A[i][k]*B[k][j];
+	            }
+	            C[i][j]=cij;
+	        }
+	    }
+
+	}
+	public static void degmm(int n, double [][]A, double [][]B, double [][]C){
+	    for(int sj = 0; sj < n; sj += BLOCKSIZE){
+	        for(int si = 0; si < n; si+=BLOCKSIZE){
+	            for(int sk=0 ; sk < n; sk+=BLOCKSIZE){
+	                do_block(n, si, sj, sk, A, B, C);
+	            }
+	        }
+	    }
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+         int n=128;
+         double[][] A = new double[n][n];
+         double[][] B = new double[n][n];
+         double[][] C = new double[n][n];
+         double t1=System.nanoTime();
+         degmm(n,A,B,C);
+         double t2=System.nanoTime();
+         System.out.println(t2-t1);
+	}
+
+}
