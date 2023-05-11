@@ -1,0 +1,31 @@
+*-----------------------------------------------------------
+* Title      : Lab 4 - Introduction to 68k simulator
+* Written by : Mohamed Raffeek & Mostafa Khaled
+* Date       : 4/11/2022
+* Description: Translating a piece of pseudo code to assembly language
+*-----------------------------------------------------------
+    ORG    $1000
+START:                  ; first instruction of program
+
+* Put program code here
+    MOVE.W  X,D0        ; copy X to register D0
+    MOVE.W  Y,D1        ; copy Y to register D1
+    CMP     #50,D0      ; compare X stored in D0 with 50
+    BLE     END_IF      ; branch to END_IF when X is less than or equal to 50
+    ADD     #60,D0      ; add 60 to D0, store the result in D0
+    MOVE.W  D0,X        ; assign new X to old X + 60
+    SUB     #10,D1      ; subtract 10 from D1, store the result in D1
+    MOVE.W  D1,Y        ; assign new y to old y - 10
+    BRA     END_IF      ; branch to END_IF
+END_IF:                 ; end of conditional block
+    ADD     D0,D1       ; add D0 to D1, store the result in D1
+    SUB     #20,D1      ; subtract 20 from D1, store the result in D1
+    MOVE.W  D1,Z        ; assign new Z to X + Y - 20
+    SIMHALT             ; halt simulator
+
+* Put variables and constants here
+X   DC.W    20          ; declare variable X in 2 bytes of memory, give it a value of 20
+Y   DC.W    30          ; declare variable Y in 2 bytes of memory, give it a value of 30
+Z   DS.W    1           ; reserve 2 bytes of memory for variable Z
+    END    START        ; last line of source
+
