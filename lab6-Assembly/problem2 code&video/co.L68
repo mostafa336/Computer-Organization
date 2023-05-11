@@ -1,0 +1,60 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 12-Nov-22 1:39:42 AM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :lab6 assembly Q1
+00000000                             3  * Written by :MOSTAFA khaled
+00000000                             4  * Date       :
+00000000                             5  * Description:Reverse an array consist of 10 items
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9  * Put program code here
+00001000  43F9 00001058             10        LEA key,A1
+00001006  47F9 00001068             11        LEA OINDEX,A3  A3 is the pointer to OINDEX
+0000100C  49F9 00001068             12        LEA OINDEX,A4  help to check start of OINDEX in the memory
+00001012  303C 0008                 13        MOVE #8,D0     D0 is the counter of keys         
+00001016                            14  first   
+00001016  3419                      15        MOVE (A1)+,D2   D2 carry value of the element in array key
+00001018  45F9 00001044             16        LEA  DATA,A2    A2 carry address of first item in array data in the memory
+0000101E  323C 0001                 17        MOVE #1,D1      D1 is the counter of data and I assumed it is one based
+00001022                            18  second    
+00001022  361A                      19       MOVE.W (A2)+,D3  D3 carry content of DATA
+00001024  B642                      20       cmp D2,D3
+00001026  6700 000E                 21       BEQ nextKey
+0000102A  5241                      22       ADD #1,D1
+0000102C  B27C 000B                 23       cmp #11,D1
+00001030  66F0                      24       BNE second      
+00001032  6000 0002                 25       BRA nextKey  
+00001036                            26  nextKey 
+00001036  36C1                      27       MOVE D1,(A3)+   if item exist add it's index else add 11
+00001038  5340                      28       SUB #1,D0       
+0000103A  66DA                      29       BNE first
+0000103C  6000 0002                 30       BRA finish
+00001040                            31  finish     
+00001040                            32  
+00001040  FFFF FFFF                 33      SIMHALT             ; halt simulator
+00001044                            34  
+00001044                            35  * Put variables and constants here
+00001044= 000D 000F 000E 0...       36  DATA DC.W   13,15,14,68,-3,20,85,30,1,19
+00001058= 0001 0006 0009 0...       37  key DC.W    1, 6, 9, 15, 68, 13, 19, 30
+00001068                            38  OINDEX DS.W 8
+00001078                            39  
+00001078                            40      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DATA                1044
+FINISH              1040
+FIRST               1016
+KEY                 1058
+NEXTKEY             1036
+OINDEX              1068
+SECOND              1022
+START               1000
